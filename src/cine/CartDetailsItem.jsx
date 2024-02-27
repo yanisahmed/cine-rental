@@ -7,11 +7,19 @@ import { MovieContext } from '../context';
 
 export default function CartDetailsItem({ onClose, cardItem }) {
 
-    const { cartData, setCartData } = useContext(MovieContext)
-    function handleDeleteFromCart(e, itemId) {
+    // const { cartData, setCartData } = useContext(MovieContext)
+    const { state, dispatch } = useContext(MovieContext)
+
+    function handleDeleteFromCart(e, item) {
         e.preventDefault();
-        const result = cartData.filter(item => item.id !== itemId)
-        setCartData([...result]);
+
+        // const result = cartData.filter(item => item.id !== itemId)
+        // setCartData([...result]);
+
+        dispatch({
+            type: 'REMOVE_FROM_CART',
+            payload: item
+        })
     }
     return (
         <>
@@ -37,7 +45,7 @@ export default function CartDetailsItem({ onClose, cardItem }) {
                     <div className="flex justify-between gap-4 items-center">
                         <button
                             className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
-                            onClick={(e) => handleDeleteFromCart(e, cardItem.id)}
+                            onClick={(e) => handleDeleteFromCart(e, cardItem)}
                         >
                             <img className="w-5 h-5" src={deleteImg} alt="" />
                             <span className="max-md:hidden">Remove</span>

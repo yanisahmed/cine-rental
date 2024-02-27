@@ -8,11 +8,13 @@ import CartDetails from './cine/CartDetails';
 import { MovieContext, ThemeContext } from './context';
 export default function Header() {
     const [showCart, setShowCart] = useState(false);
-    const { cartData } = useContext(MovieContext)
+
+    const { state } = useContext(MovieContext)
+
     const { darkMode, setDarkMode } = useContext(ThemeContext);
     return (
         <header>
-            {showCart && <CartDetails cartData={cartData} onClose={() => setShowCart(false)} />}
+            {showCart && <CartDetails cartData={state.cartData} onClose={() => setShowCart(false)} />}
             <nav className="container flex items-center justify-between space-x-10 py-6">
                 <a href="index.html">
                     <img src={Logo} width="139" height="26" alt="" />
@@ -35,8 +37,8 @@ export default function Header() {
                         <a onClick={() => setShowCart(true)} className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block" href="#">
                             <img src={ShopingCart} width="24" height="24" alt="" />
                             {
-                                cartData.length > 0 && (
-                                    <span className='rounded absolute top[-12px] left[-28px] bg-[#12CF6F]  text-white text-center w-[30px] h-[30px] p-[2px]'>{cartData.length}</span>
+                                state.cartData.length > 0 && (
+                                    <span className='rounded absolute top[-12px] left[-28px] bg-[#12CF6F]  text-white text-center w-[30px] h-[30px] p-[2px]'>{state.cartData.length}</span>
                                 )
                             }
                         </a>

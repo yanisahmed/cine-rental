@@ -6,10 +6,12 @@ import MovieDetailsModal from './MovieDetailsModal';
 import Ratting from './Ratting';
 
 export default function MovieCard({ movie }) {
+
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSeletedMovie] = useState(null);
 
-    const { cartData, setCartData } = useContext(MovieContext);
+    // const { cartData, setCartData } = useContext(MovieContext);
+    const { state, dispatch } = useContext(MovieContext);
 
     function handleShowModal() {
         setShowModal(true)
@@ -18,11 +20,15 @@ export default function MovieCard({ movie }) {
     function handleAddToCart(e, movie) {
         e.stopPropagation();
 
-        const found = cartData.find((item) => item.id === movie.id);
+        const found = state.cartData.find((item) => item.id === movie.id);
 
         if (!found) {
-            setCartData([...cartData, movie]);
-            console.log(cartData)
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: {
+                    ...movie
+                }
+            })
         } else {
             console.error(`${movie.title} already added to cart`);
         }
